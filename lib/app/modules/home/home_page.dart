@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:modular_testing/app/modules/home/pages/second/second_page.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +21,22 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         title: Text(widget.title),
       ),
       body: Column(
-        children: <Widget>[],
+        children: <Widget>[
+          Center(
+            child: RaisedButton(
+              key: Key('modularButton'),
+              child: Text('Modular Push'),
+              onPressed: () => Modular.to.pushNamed('/second'),
+            ),
+          ),
+          Center(
+            child: RaisedButton(
+              key: Key('navigatorButton'),
+              child: Text('Navigator Push'),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => SecondPage())),
+            ),
+          ),
+        ],
       ),
     );
   }

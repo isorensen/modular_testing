@@ -20,10 +20,16 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   HomeController home;
+  var appRouters;
+  var homeRouters;
 
   setUpAll(() {
     initModules([AppModule(), HomeModule()]);
     home = HomeModule.to.get<HomeController>();
+
+    // Initialize routers
+    appRouters = AppModule().routers;
+    homeRouters = HomeModule().routers;
   });
 
   test('HomeController test', () {
@@ -42,7 +48,10 @@ void main() {
     final buttonFinder = find.byKey(Key('modularButton'));
     expect(buttonFinder, findsOneWidget);
 
-    //! Line below fails with "The getter 'routers' was called on null."
+    expect(appRouters, isNotNull);
+    expect(homeRouters, isNotNull);
+    await tester.pumpAndSettle();
+
     await tester.tap(buttonFinder);
     await tester.pumpAndSettle();
     verify(mockNavigator.didPush(any, any));
